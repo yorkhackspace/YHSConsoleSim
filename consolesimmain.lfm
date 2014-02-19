@@ -1,0 +1,456 @@
+object frmMain: TfrmMain
+  Left = 367
+  Height = 763
+  Top = 177
+  Width = 1101
+  Caption = 'Spacehack game client sim'
+  ClientHeight = 763
+  ClientWidth = 1101
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  LCLVersion = '1.2.0.2'
+  object statusBar: TStatusBar
+    Left = 0
+    Height = 25
+    Top = 738
+    Width = 1101
+    Panels = <>
+  end
+  object gbServer: TGroupBox
+    Left = 0
+    Height = 57
+    Top = 0
+    Width = 1101
+    Align = alTop
+    Caption = 'MQTT server connection'
+    ClientHeight = 34
+    ClientWidth = 1097
+    TabOrder = 1
+    object Panel1: TPanel
+      Left = 0
+      Height = 34
+      Top = 0
+      Width = 1097
+      Align = alClient
+      Caption = 'Panel1'
+      ClientHeight = 34
+      ClientWidth = 1097
+      TabOrder = 0
+      object eServer: TEdit
+        Left = 1
+        Height = 32
+        Top = 1
+        Width = 857
+        Align = alClient
+        TabOrder = 0
+        Text = 'test.mosquitto.org'
+      end
+      object btnConnect: TButton
+        Left = 938
+        Height = 32
+        Top = 1
+        Width = 75
+        Align = alRight
+        Caption = 'Connect'
+        OnClick = btnConnectClick
+        TabOrder = 1
+      end
+      object ePort: TMaskEdit
+        Left = 858
+        Height = 32
+        Top = 1
+        Width = 80
+        Align = alRight
+        CharCase = ecNormal
+        MaxLength = 6
+        TabOrder = 2
+        EditMask = '999999;1;_'
+        Text = '1883  '
+        SpaceChar = '_'
+      end
+      object btnDisconnect: TButton
+        Left = 1013
+        Height = 32
+        Top = 1
+        Width = 83
+        Align = alRight
+        Caption = 'Disconnect'
+        OnClick = btnDisconnectClick
+        TabOrder = 3
+      end
+    end
+  end
+  object gbSub: TGroupBox
+    Left = 0
+    Height = 235
+    Top = 503
+    Width = 1101
+    Align = alBottom
+    Caption = 'Topics'
+    ClientHeight = 212
+    ClientWidth = 1097
+    TabOrder = 2
+    object gbStdSub: TGroupBox
+      Left = 0
+      Height = 212
+      Top = 0
+      Width = 347
+      Align = alLeft
+      Caption = 'Standard topics'
+      ClientHeight = 189
+      ClientWidth = 343
+      TabOrder = 0
+      OnClick = gbStdSubClick
+      object memStdSub: TMemo
+        Left = 0
+        Height = 189
+        Top = 0
+        Width = 343
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssAutoBoth
+        TabOrder = 0
+      end
+    end
+    object gbAddSub: TGroupBox
+      Left = 352
+      Height = 212
+      Top = 0
+      Width = 345
+      Align = alLeft
+      Caption = 'Additional topics'
+      ClientHeight = 189
+      ClientWidth = 341
+      TabOrder = 1
+      object Panel2: TPanel
+        Left = 0
+        Height = 32
+        Top = 0
+        Width = 341
+        Align = alTop
+        Caption = 'Panel2'
+        ClientHeight = 32
+        ClientWidth = 341
+        TabOrder = 0
+        object btnSubscribe: TButton
+          Left = 265
+          Height = 30
+          Top = 1
+          Width = 75
+          Align = alRight
+          Caption = 'Subscribe'
+          OnClick = btnSubscribeClick
+          TabOrder = 0
+        end
+        object eSubscription: TEdit
+          Left = 1
+          Height = 30
+          Top = 1
+          Width = 264
+          Align = alClient
+          TabOrder = 1
+        end
+      end
+      object memAddSub: TMemo
+        Left = 0
+        Height = 157
+        Top = 32
+        Width = 341
+        Align = alClient
+        ReadOnly = True
+        ScrollBars = ssAutoBoth
+        TabOrder = 1
+      end
+    end
+    object Splitter1: TSplitter
+      Left = 347
+      Height = 212
+      Top = 0
+      Width = 5
+    end
+    object Splitter4: TSplitter
+      Left = 697
+      Height = 212
+      Top = 0
+      Width = 5
+    end
+    object gbSend: TGroupBox
+      Left = 702
+      Height = 212
+      Top = 0
+      Width = 395
+      Align = alClient
+      Caption = 'Publish'
+      ClientHeight = 189
+      ClientWidth = 391
+      TabOrder = 4
+      object Panel3: TPanel
+        Left = 0
+        Height = 32
+        Top = 0
+        Width = 391
+        Align = alTop
+        ClientHeight = 32
+        ClientWidth = 391
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 1
+          Height = 30
+          Top = 1
+          Width = 43
+          Align = alLeft
+          Caption = 'Topic: '
+          Layout = tlCenter
+          ParentColor = False
+        end
+        object edtPublishTopic: TEdit
+          Left = 44
+          Height = 30
+          Top = 1
+          Width = 271
+          Align = alClient
+          TabOrder = 0
+        end
+        object btnPublish: TButton
+          Left = 315
+          Height = 30
+          Top = 1
+          Width = 75
+          Align = alRight
+          Caption = 'Publish'
+          OnClick = btnPublishClick
+          TabOrder = 1
+        end
+      end
+      object Panel4: TPanel
+        Left = 0
+        Height = 157
+        Top = 32
+        Width = 391
+        Align = alClient
+        Caption = 'Panel4'
+        ClientHeight = 157
+        ClientWidth = 391
+        TabOrder = 1
+        object Label2: TLabel
+          Left = 1
+          Height = 21
+          Top = 1
+          Width = 389
+          Align = alTop
+          Caption = 'Payload:'
+          ParentColor = False
+        end
+        object memPublishPayload: TMemo
+          Left = 1
+          Height = 134
+          Top = 22
+          Width = 389
+          Align = alClient
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+        end
+      end
+    end
+  end
+  object gbLoadConfig: TGroupBox
+    Left = 0
+    Height = 440
+    Top = 57
+    Width = 252
+    Align = alLeft
+    Caption = 'Configuration'
+    ClientHeight = 417
+    ClientWidth = 248
+    TabOrder = 3
+    object pnlLoadConfig: TPanel
+      Left = 0
+      Height = 34
+      Top = 0
+      Width = 248
+      Align = alTop
+      Caption = 'pnlLoadConfig'
+      ClientHeight = 34
+      ClientWidth = 248
+      TabOrder = 0
+      OnResize = pnlLoadConfigResize
+      object fneLoadConfig: TFileNameEdit
+        Left = 1
+        Height = 32
+        Top = 1
+        Width = 221
+        OnAcceptFileName = fneLoadConfigAcceptFileName
+        FilterIndex = 0
+        HideDirectories = False
+        ButtonWidth = 23
+        NumGlyphs = 1
+        Align = alLeft
+        MaxLength = 0
+        TabOrder = 0
+      end
+    end
+    object tvControls: TTreeView
+      Left = 0
+      Height = 341
+      Top = 76
+      Width = 248
+      Align = alClient
+      DefaultItemHeight = 24
+      TabOrder = 1
+    end
+    object lblMyIP: TLabel
+      Left = 0
+      Height = 21
+      Top = 34
+      Width = 248
+      Align = alTop
+      Caption = 'My IP: '
+      ParentColor = False
+    end
+    object lblServerIP: TLabel
+      Left = 0
+      Height = 21
+      Top = 55
+      Width = 248
+      Align = alTop
+      Caption = 'Server IP:'
+      ParentColor = False
+    end
+  end
+  object sbDrawingArea: TScrollBox
+    Left = 257
+    Height = 440
+    Top = 57
+    Width = 672
+    HorzScrollBar.Page = 670
+    VertScrollBar.Page = 438
+    Align = alClient
+    AutoSize = True
+    ClientHeight = 438
+    ClientWidth = 670
+    TabOrder = 4
+    OnPaint = sbDrawingAreaPaint
+    object pnlControls: TPanel
+      Left = 0
+      Height = 26
+      Top = 0
+      Width = 30
+      TabOrder = 0
+    end
+  end
+  object Splitter2: TSplitter
+    Left = 252
+    Height = 440
+    Top = 57
+    Width = 5
+  end
+  object Splitter3: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 6
+    Top = 497
+    Width = 1101
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+  object gbControls: TGroupBox
+    Left = 929
+    Height = 440
+    Top = 57
+    Width = 172
+    Align = alRight
+    Caption = 'Commands'
+    ClientHeight = 417
+    ClientWidth = 168
+    TabOrder = 7
+    object gbComServer: TGroupBox
+      Left = 0
+      Height = 114
+      Top = 0
+      Width = 168
+      Align = alTop
+      Caption = 'Server Communication'
+      ClientHeight = 91
+      ClientWidth = 164
+      Enabled = False
+      TabOrder = 0
+      object btnAutoSubscribe: TButton
+        Left = 0
+        Height = 25
+        Top = 0
+        Width = 164
+        Align = alTop
+        Caption = 'Subscribe to my topics'
+        OnClick = btnAutoSubscribeClick
+        TabOrder = 0
+      end
+      object btnRegister: TButton
+        Left = 0
+        Height = 25
+        Top = 50
+        Width = 164
+        Align = alTop
+        Caption = 'Register with server'
+        OnClick = btnRegisterClick
+        TabOrder = 1
+      end
+      object btnClearSubs: TButton
+        Left = 0
+        Height = 25
+        Top = 25
+        Width = 164
+        Align = alTop
+        Caption = 'Clear all subscriptions'
+        OnClick = btnClearSubsClick
+        TabOrder = 2
+      end
+    end
+    object gbComLocal: TGroupBox
+      Left = 0
+      Height = 89
+      Top = 114
+      Width = 168
+      Align = alTop
+      Caption = 'Local Config'
+      ClientHeight = 66
+      ClientWidth = 164
+      TabOrder = 1
+      object btnReload: TButton
+        Left = 0
+        Height = 25
+        Top = 0
+        Width = 164
+        Align = alTop
+        Caption = 'Reload config from file'
+        OnClick = btnReloadClick
+        TabOrder = 0
+      end
+      object btnCreateControls: TButton
+        Left = 0
+        Height = 25
+        Top = 25
+        Width = 164
+        Align = alTop
+        Caption = 'Display controls'
+        OnClick = btnCreateControlsClick
+        TabOrder = 1
+      end
+    end
+  end
+  object MQTTClient: TMQTTClient
+    ClientID = 'fgsdlhjklh'
+    Port = 0
+    OnConnAck = MQTTClientConnAck
+    OnPublish = MQTTClientPublish
+    OnPingResp = MQTTClientPingResp
+    OnSubAck = MQTTClientSubAck
+    left = 320
+    top = 216
+  end
+  object tmrStat: TTimer
+    OnTimer = tmrStatTimer
+    left = 424
+    top = 216
+  end
+end

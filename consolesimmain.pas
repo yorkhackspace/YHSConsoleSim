@@ -7,95 +7,9 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ExtCtrls, MaskEdit, ComCtrls, EditBtn, Buttons, MQTTComponent, fpjson,
-  JSONParser;
+  JSONParser, spacehackcontrols;
 
 type
-
-  TSpacehackControlAction = (shcaUp, shcaDown);
-
-  TSpacehackDisplay = record
-    displayType: string;
-    charWidth, charHeight: integer;
-  end;
-
-  TSpacehackPins = record
-    numPins: integer;
-    pinNames: array of string;
-    pinIDs: array of string;
-  end;
-
-  TSpacehackBus = record
-    busName: string;
-    pins: TSpacehackPins;
-  end;
-
-  TSpacehackControl = class(TObject)
-    display: TSpacehackDisplay;
-    hardware: string;
-    pins: TSpacehackPins;
-    name: string;
-
-    //ui stuff
-    aLabel: TLabel;
-
-    procedure initUI(thisPanel:TPanel) virtual;
-  end;
-
-  TSPacehackInstructionDisplay = class(TSpacehackControl)
-    instruction: string;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-  TSpacehackGameControl = class(TSpacehackControl)
-    public
-    enabled: boolean;
-    procedure update(action: TSpacehackControlAction; myTopic: string;  value: integer) virtual;
-  end;
-
-  TSpacehackGameControlKeypad = class(TSpacehackGameControl)
-    Button0,Button1,Button2,
-    Button3,Button4,Button5,
-    Button6,Button7,Button8,
-    Button9,ButtonStar, ButtonHash,
-    ButtonA, ButtonB, ButtonC, ButtonD
-    : TButton;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-  TSpacehackGameControlIlluminatedToggle = class(TSpacehackGameControl)
-    lightIsOn: boolean;
-    lblLight: TLabel;
-    btnOn, btnOff: TButton;
-    procedure update(action: TSpacehackControlAction; myTopic: string; value: integer) override;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-  TSpacehackGameControlFourButtons = class(TSpacehackGameControl)
-    button1Name, button2Name, button3Name, button4Name: string;
-    Button1, Button2, Button3, Button4: TButton;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-  TSpacehackGameControlPotentiometer = class(TSpacehackGameControl)
-    procedure update(action: TSpacehackControlAction; myTopic: string; value: integer) override;
-  end;
-
-  TSpacehackGameControlIlluminatedButton = class(TSpacehackGameControl)
-    lightIsOn: boolean;
-
-    lblLight: TLabel;
-    theButton: TButton;
-
-    procedure update(action: TSpacehackControlAction; myTopic: string; value: integer) override;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-  TSpacehackGameControlCombo7SegColourRotary = class(TSpacehackGameControl)
-    procedure update(action: TSpacehackControlAction; myTopic: string; value: integer) override;
-    procedure initUI(thisPanel:TPanel) override;
-  end;
-
-
 
   { TfrmMain }
 
@@ -109,6 +23,7 @@ type
     btnClearSubs: TButton;
     btnCreateControls: TButton;
     btnPublish: TButton;
+    cbUIUpdate: TCheckBox;
     edtPublishTopic: TEdit;
     eServer: TEdit;
     eSubscription: TEdit;
@@ -143,6 +58,7 @@ type
     Splitter3: TSplitter;
     Splitter4: TSplitter;
     statusBar: TStatusBar;
+    tmrUIUpdate: TTimer;
     tmrStat: TTimer;
     tvControls: TTreeView;
     procedure btnAutoSubscribeClick(Sender: TObject);
@@ -152,6 +68,7 @@ type
     procedure btnPublishClick(Sender: TObject);
     procedure btnRegisterClick(Sender: TObject);
     procedure btnReloadClick(Sender: TObject);
+    procedure cbUIUpdateChange(Sender: TObject);
 
     procedure handleCtrlUp(Sender: TObject; Button: TMouseButton;
                           Shift: TShiftState; X, Y: Integer);
@@ -179,6 +96,7 @@ type
     procedure loadConfiguration(configFile: string);
     procedure subscribeTo(topic: string; isAdditional: boolean = false);
     procedure setInstruction(instruction: string);
+    procedure tmrUIUpdateTimer(Sender: TObject);
   private
     { private declarations }
   public
@@ -195,7 +113,7 @@ var
   controlJSON, busJSON: array of TJSONObject;
   controlID: array of integer;
   busID: array of string;
-  spacehackControls: array of TSpacehackControl;
+  myspacehackControls: array of TSpacehackControl;
   spacehackBuses: array of TSpacehackBus;
 
   nextTop, nextLeft: integer;
@@ -203,241 +121,6 @@ var
 implementation
 
 {$R *.lfm}
-
-{ Spacehack controls }
-
-//Default update handler, just sends the tag value to the correct update topic
-procedure TSpacehackGameControl.update(action: TSpacehackControlAction; myTopic: string; value: integer);
-begin
-  case action of
-       shcaUp:  frmMain.MQTTClient.Publish(myTopic, inttostr(value));
-  end;
-end;
-
-procedure TSpacehackGameControlIlluminatedButton.update(action: TSpacehackControlAction; myTopic: string; value: integer);
-begin
-  case action of
-       shcaDown: begin frmMain.MQTTClient.Publish(myTopic, '1'); self.lightIsOn:=true; end;
-       shcaUp: begin frmMain.MQTTClient.Publish(myTopic, '0');   self.lightIsOn:=false; end;
-  end;
-end;
-
-procedure TSpacehackGameControlIlluminatedToggle.update(action: TSpacehackControlAction; myTopic: string; value: integer);
-begin
-  case action of
-       shcaDown: begin
-         frmMain.MQTTClient.Publish(myTopic, '1');
-         self.lightIsOn:=true;
-       end;
-       shcaUp: begin
-         frmMain.MQTTClient.Publish(myTopic, '0');
-         self.lightIsOn:=false;
-       end;
-  end;
-end;
-
-procedure TSpacehackGameControlCombo7SegColourRotary.update(action: TSpacehackControlAction; myTopic: string; value: integer);
-begin
-  case action of
-       shcaDown:  frmMain.MQTTClient.Publish(myTopic, '1');
-       shcaUp:  frmMain.MQTTClient.Publish(myTopic, '0');
-  end;
-end;
-
-
-procedure TSpacehackGameControlPotentiometer.update(action: TSpacehackControlAction; myTopic: string; value: integer);
-begin
-  case action of
-       shcaDown:  frmMain.MQTTClient.Publish(myTopic, '1');
-       shcaUp:  frmMain.MQTTClient.Publish(myTopic, '0');
-  end;
-end;
-
-//UI initiators
-
-procedure TSpacehackControl.initUI(thisPanel: TPanel);
-begin;
-  aLabel := TLabel.Create(thisPanel);
-  with aLabel do begin
-    top := 20;
-    left := 0;
-    Font.Size:=20;
-    Parent:= thisPanel;
-    Visible:=true;
-    caption := name;
-  end;
-end;
-
-procedure TSPacehackInstructionDisplay.initUI(thisPanel: TPanel);
-begin;
-  inherited;
-  with aLabel do begin
-    WordWrap:=true;
-    AutoSize:=true;
-    Caption:=self.instruction;
-    width := thisPanel.Width - 4;
-  end;
-end;
-
-procedure TSpacehackGameControlIlluminatedButton.initUI(thisPanel: TPanel);
-begin;
-  inherited;
-  lblLight := TLabel.Create(thisPanel);
-  with lblLight do begin
-    top := 40;
-    left := 0;
-    AutoSize:=true;
-    Font.Size:=20;
-    Parent:= thisPanel;
-    Visible:=true;
-    if lightIsOn then
-    begin
-      Caption:= 'ON';
-      Color:=clGreen;
-    end else
-    begin
-      Caption:= 'OFF';
-      Color:=clRed;
-    end;
-    left := round((thisPanel.Width/2) - (width/2));
-  end;
-
-  theButton := TButton.Create(thisPanel);
-  with theButton do begin
-    width := 100;
-    height := 100;
-    top := 90;
-    left := 50;
-    parent := thisPanel;
-    Visible:=true;
-    tag := 1;
-    OnMouseDown:= @frmMain.handleCtrlDown;
-    OnMouseUp:= @frmMain.handleCtrlUp;
-  end;
-end;
-
-procedure TSpacehackGameControlFourButtons.initUI(thisPanel: TPanel);
-          procedure initButton(button: TButton; panel: TPanel; buttontop: integer; buttonTag: integer; buttonname: string);
-          begin;
-            button := TButton.Create(panel);
-            with button do begin
-              left := 5; top := buttontop; width := 190; height := 35;
-              caption := buttonname;
-              parent := thisPanel; visible := true;
-              tag := buttonTag;
-              OnMouseDown:= @frmMain.handleCtrlDown;
-              OnMouseUp:= @frmMain.handleCtrlUp;
-            end;
-          end;
-begin;
-  inherited;
-  initButton(Button1, thisPanel, 40, 1, self.button1Name);
-  initButton(Button2, thisPanel, 75, 2, self.button2Name);
-  initButton(Button3, thisPanel, 110, 3, self.button3Name);
-  initButton(Button4, thisPanel, 145, 4, self.button4Name);
-end;
-
-procedure TSpacehackGameControlIlluminatedToggle.initUI(thisPanel: TPanel);
-begin;
-  inherited;
-  lblLight := TLabel.Create(thisPanel);
-  with lblLight do begin
-    top := 40;
-    left := 0;
-    AutoSize:=true;
-    Font.Size:=20;
-    Parent:= thisPanel;
-    Visible:=true;
-    if lightIsOn then
-    begin
-      Caption:= 'ON';
-      Color:=clGreen;
-    end else
-    begin
-      Caption:= 'OFF';
-      Color:=clRed;
-    end;
-    left := round((thisPanel.Width/2) - (width/2));
-  end;
-  btnOn := TButton.Create(thisPanel);
-  with btnOn do begin
-    width := 100;
-    height := 50;
-    top := 90;
-    left := 50;
-    parent := thisPanel;
-    Visible:=true;
-    Caption:='On';
-    tag := 1;
-    OnMouseDown:= @frmMain.handleCtrlDown;
-    OnMouseUp:= @frmMain.handleCtrlUp;
-  end;
-  btnOff := TButton.Create(thisPanel);
-  with btnOff do begin
-    width := 100;
-    height := 50;
-    top := 140;
-    left := 50;
-    parent := thisPanel;
-    Visible:=true;
-    Caption:='Off';
-    tag := 0;
-    OnMouseDown:= @frmMain.handleCtrlDown;
-    OnMouseUp:= @frmMain.handleCtrlUp;
-  end;
-  if lightIsOn then
-  begin
-    btnOff.Enabled:=true;
-    btnOn.Enabled:=false;
-  end else
-  begin
-    btnoff.Enabled:=false;
-    btnOn.Enabled:=true;
-  end;
-end;
-
-procedure TSpacehackGameControlCombo7SegColourRotary.initUI(thisPanel: TPanel);
-begin;
-  inherited;
-
-end;
-
-procedure TSpacehackGameControlKeypad.initUI(thisPanel: TPanel);
-          procedure initButton(button: TButton; panel: TPanel; buttonX, buttonY: integer; buttonTag: integer; buttonname: string);
-          const
-            xVals: array [1..4] of integer = (5,55,105,155);
-            yVals: array [1..4] of integer = (40,80,120,160);
-          begin;
-            button := TButton.Create(panel);
-            with button do begin
-              left := xVals[buttonX]; top := yVals[buttonY]; width := 40; height := 40;
-              caption :=buttonName;
-              parent := thisPanel; visible := true;tag := buttonTag;OnMouseDown:= @frmMain.handleCtrlDown;OnMouseUp:= @frmMain.handleCtrlUp;
-            end;
-          end;
-begin;
-  inherited;
-  initButton(Button1, thisPanel, 1, 1, 1, '1');
-  initButton(Button4, thisPanel, 1, 2, 4, '4');
-  initButton(Button7, thisPanel, 1, 3, 7, '7');
-  initButton(ButtonStar, thisPanel, 1, 4, 101, '*');
-
-  initButton(Button2, thisPanel, 2, 1, 2, '2');
-  initButton(Button5, thisPanel, 2, 2, 5, '5');
-  initButton(Button8, thisPanel, 2, 3, 8, '8');
-  initButton(Button0, thisPanel, 2, 4, 0, '0');
-
-  initButton(Button3, thisPanel, 3, 1, 3, '3');
-  initButton(Button6, thisPanel, 3, 2, 6, '6');
-  initButton(Button9, thisPanel, 3, 3, 9, '9');
-  initButton(ButtonHash, thisPanel, 3, 4, 102, '#');
-
-  initButton(ButtonA, thisPanel, 4, 1, 103, 'A');
-  initButton(ButtonB, thisPanel, 4, 2, 104, 'B');
-  initButton(ButtonC, thisPanel, 4, 3, 105, 'C');
-  initButton(ButtonD, thisPanel, 4, 4, 106, 'D');
-end;
-
 { TfrmMain }
 
 procedure TfrmMain.log(info: string);
@@ -511,7 +194,7 @@ begin
 
   for i := 0 to numControls-1 do
   begin
-    if spacehackControls[i].hardware <> 'instructions' then begin
+    if myspacehackControls[i].hardware <> 'instructions' then begin
       subscribeTo(prefix + inttostr(controlID[i]) + '/name');
       subscribeTo(prefix + inttostr(controlID[i]) + '/enabled');
     end;
@@ -541,8 +224,8 @@ begin
   controlID := TWinControl(sender).Parent.Tag;
   stateID := TWinControl(Sender).Tag;
   frmMain.log(inttostr(stateID) + ' Changed for control ' + inttostr((controlID)));
-  frmMain.log(spacehackControls[controlID].ToString);
-  TSpacehackGameControl(spacehackControls[controlID]).update(action, 'clients/' + myIP + '/' + inttostr(controlID) + '/valuechanged', stateID);
+  frmMain.log(myspacehackControls[controlID].ToString);
+  TSpacehackGameControl(myspacehackControls[controlID]).update(action, 'clients/' + myIP + '/' + inttostr(controlID) + '/valuechanged', stateID);
 end;
 
 procedure TfrmMain.handleCtrlDown(Sender: TObject; Button: TMouseButton;
@@ -573,7 +256,7 @@ begin
   nextLeft := 10;
   for i := 0 to numControls-1 do
   begin
-    thisControl := spacehackControls[i];
+    thisControl := myspacehackControls[i];
     thisPanel := TPanel.Create(pnlControls);
     with thisPanel do begin
       Width:=200;
@@ -587,7 +270,7 @@ begin
     with thisLabel do begin
       top := 0;
       left := 0;
-      caption := spacehackControls[i].hardware;
+      caption := myspacehackControls[i].hardware;
       parent := TWinControl(thisPanel);
       visible := true;
     end;
@@ -606,6 +289,11 @@ end;
 procedure TfrmMain.btnReloadClick(Sender: TObject);
 begin
   loadConfiguration(fneLoadConfig.Text);
+end;
+
+procedure TfrmMain.cbUIUpdateChange(Sender: TObject);
+begin
+  tmrUIUpdate.Enabled:=cbUIUpdate.Checked;
 end;
 
 procedure TfrmMain.fneLoadConfigAcceptFileName(Sender: TObject;
@@ -657,10 +345,20 @@ var
 begin
   for i := 0 to numControls-1 do
   begin
-    if spacehackControls[i].hardware = 'instructions' then begin
+    if myspacehackControls[i].hardware = 'instructions' then begin
       log('Instruction update');
-      TSPacehackInstructionDisplay(spacehackControls[i]).instruction:=instruction;
+      TSPacehackInstructionDisplay(myspacehackControls[i]).instruction:=instruction;
     end;
+  end;
+end;
+
+procedure TfrmMain.tmrUIUpdateTimer(Sender: TObject);
+var
+  i: integer;
+begin
+  for i := 0 to numControls-1 do
+  begin
+    myspacehackControls[i].updateUI;
   end;
 end;
 
@@ -733,7 +431,7 @@ begin
   numControls := controlsJSON.Count;
   setLength(controlJSON,            numControls);
   setLength(controlID,              numControls);
-  setLength(spacehackControls,      numControls);
+  setLength(myspacehackControls,      numControls);
 
   //Loop through all controls
   for i := 0 to numControls-1 do begin
@@ -743,34 +441,34 @@ begin
     controlID[i] := i;
     //store the hardware type
     hardwareType := controlJSON[i].Find('hardware').AsString;
-    if hardwareType = 'instructions' then spacehackControls[i] := TSPacehackInstructionDisplay.create;
-    if hardwareType = 'combo7SegColourRotary' then spacehackControls[i] := TSpacehackGameControlCombo7SegColourRotary.create;
-    if hardwareType = 'illuminatedtoggle' then spacehackControls[i] := TSpacehackGameControlIlluminatedToggle.create;
-    if hardwareType = 'fourbuttons' then spacehackControls[i] := TSpacehackGameControlFourButtons.create;
-    if hardwareType = 'potentiometer' then spacehackControls[i] := TSpacehackGameControlPotentiometer.create;
-    if hardwareType = 'illuminatedbutton' then spacehackControls[i] := TSpacehackGameControlIlluminatedButton.create;
-    if hardwareType = 'keypad' then spacehackControls[i] := TSpacehackGameControlKeypad.create;
-    //spacehackControls[i] := TSpacehackControl.create;
-    spacehackControls[i].hardware:=hardwareType;
+    if hardwareType = 'instructions' then myspacehackControls[i] := TSPacehackInstructionDisplay.create;
+    if hardwareType = 'combo7SegColourRotary' then myspacehackControls[i] := TSpacehackGameControlCombo7SegColourRotary.create;
+    if hardwareType = 'illuminatedtoggle' then myspacehackControls[i] := TSpacehackGameControlIlluminatedToggle.create;
+    if hardwareType = 'fourbuttons' then myspacehackControls[i] := TSpacehackGameControlFourButtons.create;
+    if hardwareType = 'potentiometer' then myspacehackControls[i] := TSpacehackGameControlPotentiometer.create;
+    if hardwareType = 'illuminatedbutton' then myspacehackControls[i] := TSpacehackGameControlIlluminatedButton.create;
+    if hardwareType = 'keypad' then myspacehackControls[i] := TSpacehackGameControlKeypad.create;
+    //myspacehackControls[i] := TSpacehackControl.create;
+    myspacehackControls[i].hardware:=hardwareType;
 
     //get the JSON for the display object
     thisDisplayJSON := TJSONObject(controlJSON[i].Find('display'));
     //get the display information
-    spacehackControls[i].display.displayType:=thisDisplayJSON.Find('type').AsString;
-    spacehackControls[i].display.charHeight:=thisDisplayJSON.Find('height').AsInteger;
-    spacehackControls[i].display.charWidth:=thisDisplayJSON.Find('width').AsInteger;
+    myspacehackControls[i].display.displayType:=thisDisplayJSON.Find('type').AsString;
+    myspacehackControls[i].display.charHeight:=thisDisplayJSON.Find('height').AsInteger;
+    myspacehackControls[i].display.charWidth:=thisDisplayJSON.Find('width').AsInteger;
 
     //get the JSON for the pins object
     thisPinsJSON := TJSONObject(controlJSON[i].Find('pins'));
     //get the display information
-    spacehackControls[i].pins.numPins:=thisPinsJSON.Count;
-    setLength(spacehackControls[i].pins.pinNames, thisPinsJSON.Count);
-    setLength(spacehackControls[i].pins.pinIDs, thisPinsJSON.Count);
+    myspacehackControls[i].pins.numPins:=thisPinsJSON.Count;
+    setLength(myspacehackControls[i].pins.pinNames, thisPinsJSON.Count);
+    setLength(myspacehackControls[i].pins.pinIDs, thisPinsJSON.Count);
 
-    for j := 0 to spacehackControls[i].pins.numPins-1 do
+    for j := 0 to myspacehackControls[i].pins.numPins-1 do
     begin
-      spacehackControls[i].pins.pinNames[j] := thisPinsJSON.Names[j];
-      spacehackControls[i].pins.pinIDs[j] := thisPinsJSON.Strings[thisPinsJSON.Names[j]];
+      myspacehackControls[i].pins.pinNames[j] := thisPinsJSON.Names[j];
+      myspacehackControls[i].pins.pinIDs[j] := thisPinsJSON.Strings[thisPinsJSON.Names[j]];
     end;
 
   end;
@@ -823,15 +521,15 @@ begin
   for i := 0 to numControls-1 do
   begin
     thisNode := tvControls.Items.AddChild(rootControlNode, inttostr(controlID[i]));
-    tvControls.Items.AddChild(thisNode, 'hardware: '+ spacehackControls[i].hardware);
+    tvControls.Items.AddChild(thisNode, 'hardware: '+ myspacehackControls[i].hardware);
     thisDisplay := tvControls.Items.AddChild(thisNode, 'display');
-    tvControls.Items.AddChild(thisDisplay, 'Type: ' + spacehackControls[i].display.displayType);
-    tvControls.Items.AddChild(thisDisplay, 'Width: ' + inttostr(spacehackControls[i].display.charWidth));
-    tvControls.Items.AddChild(thisDisplay, 'Height: ' + inttostr(spacehackControls[i].display.charHeight));
+    tvControls.Items.AddChild(thisDisplay, 'Type: ' + myspacehackControls[i].display.displayType);
+    tvControls.Items.AddChild(thisDisplay, 'Width: ' + inttostr(myspacehackControls[i].display.charWidth));
+    tvControls.Items.AddChild(thisDisplay, 'Height: ' + inttostr(myspacehackControls[i].display.charHeight));
     thisPins := tvControls.Items.AddChild(thisNode, 'pins');
-    for j := 0 to spacehackControls[i].pins.numPins-1 do
+    for j := 0 to myspacehackControls[i].pins.numPins-1 do
     begin
-      tvControls.Items.AddChild(thisPins, 'Pin name: ' + spacehackControls[i].pins.pinNames[j] + '   =>   ID: ' + spacehackControls[i].pins.pinIDs[j]);
+      tvControls.Items.AddChild(thisPins, 'Pin name: ' + myspacehackControls[i].pins.pinNames[j] + '   =>   ID: ' + myspacehackControls[i].pins.pinIDs[j]);
     end;
   end;
   for i := 0 to numBuses-1 do

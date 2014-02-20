@@ -1,10 +1,10 @@
 object frmMain: TfrmMain
-  Left = 367
-  Height = 763
-  Top = 177
+  Left = 318
+  Height = 689
+  Top = 175
   Width = 1101
   Caption = 'Spacehack game client sim'
-  ClientHeight = 763
+  ClientHeight = 689
   ClientWidth = 1101
   OnClose = FormClose
   OnCreate = FormCreate
@@ -13,7 +13,7 @@ object frmMain: TfrmMain
   object statusBar: TStatusBar
     Left = 0
     Height = 25
-    Top = 738
+    Top = 664
     Width = 1101
     Panels = <>
   end
@@ -84,7 +84,7 @@ object frmMain: TfrmMain
   object gbSub: TGroupBox
     Left = 0
     Height = 235
-    Top = 503
+    Top = 429
     Width = 1101
     Align = alBottom
     Caption = 'Topics'
@@ -256,12 +256,12 @@ object frmMain: TfrmMain
   end
   object gbLoadConfig: TGroupBox
     Left = 0
-    Height = 440
+    Height = 366
     Top = 57
     Width = 252
     Align = alLeft
     Caption = 'Configuration'
-    ClientHeight = 417
+    ClientHeight = 343
     ClientWidth = 248
     TabOrder = 3
     object pnlLoadConfig: TPanel
@@ -292,7 +292,7 @@ object frmMain: TfrmMain
     end
     object tvControls: TTreeView
       Left = 0
-      Height = 341
+      Height = 267
       Top = 76
       Width = 248
       Align = alClient
@@ -320,14 +320,14 @@ object frmMain: TfrmMain
   end
   object sbDrawingArea: TScrollBox
     Left = 257
-    Height = 440
+    Height = 366
     Top = 57
     Width = 672
     HorzScrollBar.Page = 670
-    VertScrollBar.Page = 438
+    VertScrollBar.Page = 364
     Align = alClient
     AutoSize = True
-    ClientHeight = 438
+    ClientHeight = 364
     ClientWidth = 670
     TabOrder = 4
     OnPaint = sbDrawingAreaPaint
@@ -341,7 +341,7 @@ object frmMain: TfrmMain
   end
   object Splitter2: TSplitter
     Left = 252
-    Height = 440
+    Height = 366
     Top = 57
     Width = 5
   end
@@ -349,19 +349,19 @@ object frmMain: TfrmMain
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 497
+    Top = 423
     Width = 1101
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object gbControls: TGroupBox
     Left = 929
-    Height = 440
+    Height = 366
     Top = 57
     Width = 172
     Align = alRight
     Caption = 'Commands'
-    ClientHeight = 417
+    ClientHeight = 343
     ClientWidth = 168
     TabOrder = 7
     object gbComServer: TGroupBox
@@ -408,12 +408,12 @@ object frmMain: TfrmMain
     end
     object gbComLocal: TGroupBox
       Left = 0
-      Height = 89
+      Height = 113
       Top = 114
       Width = 168
       Align = alTop
       Caption = 'Local Config'
-      ClientHeight = 66
+      ClientHeight = 90
       ClientWidth = 164
       TabOrder = 1
       object btnReload: TButton
@@ -436,6 +436,16 @@ object frmMain: TfrmMain
         OnClick = btnCreateControlsClick
         TabOrder = 1
       end
+      object cbUIUpdate: TCheckBox
+        Left = 0
+        Height = 25
+        Top = 50
+        Width = 164
+        Align = alTop
+        Caption = 'cbUIUpdate'
+        OnChange = cbUIUpdateChange
+        TabOrder = 2
+      end
     end
   end
   object MQTTClient: TMQTTClient
@@ -451,6 +461,13 @@ object frmMain: TfrmMain
   object tmrStat: TTimer
     OnTimer = tmrStatTimer
     left = 424
+    top = 216
+  end
+  object tmrUIUpdate: TTimer
+    Enabled = False
+    Interval = 20
+    OnTimer = tmrUIUpdateTimer
+    left = 520
     top = 216
   end
 end

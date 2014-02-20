@@ -7,8 +7,11 @@ uses
   cthreads,
   //{$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, consolesimMain , sysutils
-  { you can add units after this };
+  Forms, consolesimMain, sysutils, spacehackcontrols,
+  spacehackcontrolsinstructiondisplay, spacehackcontrolsilluminatedtoggle,
+  spacehackcontrolskeypad, 
+spacehackcontrolsfourbuttons, spacehackcontrolspotentiometer, 
+spacehackcontrolscombosevensegcolourrotary, spacehackcontrolsilluminatedbutton;
 
 {$R *.res}
 

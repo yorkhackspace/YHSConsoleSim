@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
     <Version Value="9"/>
@@ -21,6 +21,9 @@
     </MacroValues>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
+      <SharedMatrixOptions Count="1">
+        <Item1 ID="588200002927" Modes="Default" Type="IDEMacro" MacroName="LCLWidgetType" Value="gtk2"/>
+      </SharedMatrixOptions>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -30,7 +33,6 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <LaunchingApplication PathPlusParams="/usr/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
     <RequiredPackages Count="3">
@@ -44,7 +46,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="10">
       <Unit0>
         <Filename Value="consolesim.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -63,6 +65,41 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="spacehackcontrols"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsinstructiondisplay"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="spacehackcontrolsilluminatedtoggle.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsilluminatedtoggle"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="spacehackcontrolskeypad.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolskeypad"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="spacehackcontrolsfourbuttons.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsfourbuttons"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="spacehackcontrolspotentiometer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolspotentiometer"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="spacehackcontrolscombosevensegcolourrotary.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolscombosevensegcolourrotary"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="spacehackcontrolsilluminatedbutton.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsilluminatedbutton"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -87,7 +124,6 @@
       </CompilerMessages>
       <CompilerPath Value="$(CompPath)"/>
     </Other>
-    <LCLWidgetType Value="gtk2"/>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectSession>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="13">
+    <Units Count="22">
       <Unit0>
         <Filename Value="consolesim.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,232 +20,324 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="consolesimMain"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="0"/>
         <WindowIndex Value="0"/>
-        <TopLine Value="214"/>
-        <CursorPos X="5" Y="214"/>
+        <TopLine Value="1"/>
+        <CursorPos X="45" Y="19"/>
         <UsageCount Value="441"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
+        <Filename Value="spacehackcontrols.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrols"/>
+        <EditorIndex Value="2"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="32"/>
+        <CursorPos X="5" Y="66"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTComponent.pas"/>
         <UnitName Value="MQTTComponent"/>
         <WindowIndex Value="0"/>
         <TopLine Value="358"/>
         <CursorPos X="49" Y="375"/>
         <UsageCount Value="63"/>
-      </Unit2>
-      <Unit3>
+      </Unit3>
+      <Unit4>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTsynapse/MQTTblcksock.pas"/>
         <UnitName Value="MQTTblcksock"/>
         <WindowIndex Value="0"/>
         <TopLine Value="2741"/>
         <CursorPos X="67" Y="2760"/>
         <UsageCount Value="10"/>
-      </Unit3>
-      <Unit4>
+      </Unit4>
+      <Unit5>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTsynapse/MQTTsynsock.pas"/>
         <UnitName Value="MQTTsynsock"/>
         <WindowIndex Value="0"/>
         <TopLine Value="42"/>
         <CursorPos X="17" Y="72"/>
         <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
+      </Unit5>
+      <Unit6>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTsynapse/MQTTssfpc.inc"/>
         <WindowIndex Value="0"/>
         <TopLine Value="597"/>
         <CursorPos X="3" Y="599"/>
         <UsageCount Value="10"/>
-      </Unit5>
-      <Unit6>
+      </Unit6>
+      <Unit7>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTsynapse/MQTTsynautil.pas"/>
         <UnitName Value="MQTTsynautil"/>
         <WindowIndex Value="0"/>
         <TopLine Value="68"/>
         <CursorPos X="26" Y="89"/>
         <UsageCount Value="10"/>
-      </Unit6>
-      <Unit7>
+      </Unit7>
+      <Unit8>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTsynapse/MQTTsynaip.pas"/>
         <UnitName Value="MQTTsynaip"/>
         <WindowIndex Value="0"/>
         <TopLine Value="43"/>
         <CursorPos X="17" Y="65"/>
         <UsageCount Value="10"/>
-      </Unit7>
-      <Unit8>
+      </Unit8>
+      <Unit9>
         <Filename Value="../../laz components/mqtt-free-pascal/TMQTTClient/MQTTComponentReadThread.pas"/>
         <UnitName Value="MQTTComponentReadThread"/>
         <WindowIndex Value="0"/>
         <TopLine Value="42"/>
         <CursorPos X="9" Y="63"/>
         <UsageCount Value="10"/>
-      </Unit8>
-      <Unit9>
+      </Unit9>
+      <Unit10>
         <Filename Value="/usr/share/lazarus/1.2RC2/lcl/stdctrls.pp"/>
         <UnitName Value="StdCtrls"/>
         <WindowIndex Value="0"/>
         <TopLine Value="1151"/>
         <CursorPos X="14" Y="1170"/>
         <UsageCount Value="62"/>
-      </Unit9>
-      <Unit10>
+      </Unit10>
+      <Unit11>
         <Filename Value="/usr/share/lazarus/1.2RC2/lcl/controls.pp"/>
         <UnitName Value="Controls"/>
         <WindowIndex Value="0"/>
         <TopLine Value="339"/>
         <CursorPos X="34" Y="363"/>
         <UsageCount Value="62"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="spacehackcontrols.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="spacehackcontrols"/>
-        <EditorIndex Value="2"/>
-        <WindowIndex Value="0"/>
-        <TopLine Value="1"/>
-        <CursorPos X="32" Y="9"/>
-        <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit11>
       <Unit12>
         <Filename Value="/usr/share/lazarus/1.0.14/lcl/controls.pp"/>
         <UnitName Value="Controls"/>
-        <EditorIndex Value="1"/>
         <WindowIndex Value="0"/>
         <TopLine Value="164"/>
         <CursorPos X="3" Y="175"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="spacehackcontrolsinstructiondisplay.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsinstructiondisplay"/>
+        <EditorIndex Value="8"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="7"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="spacehackcontrolsset.pas"/>
+        <UnitName Value="spacehackcontrolsset"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="3" Y="8"/>
+        <UsageCount Value="20"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="spacehackcontrolsilluminatedtoggle.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsilluminatedtoggle"/>
+        <EditorIndex Value="7"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="25"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="spacehackcontrolskeypad.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolskeypad"/>
+        <EditorIndex Value="6"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="27"/>
+        <CursorPos X="91" Y="12"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="spacehackcontrolilluminatedbutton.pas"/>
+        <UnitName Value="spacehackcontrolilluminatedbutton"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="25"/>
+        <CursorPos X="15" Y="27"/>
+        <UsageCount Value="21"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="spacehackcontrolsfourbuttons.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolsfourbuttons"/>
+        <EditorIndex Value="5"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="6"/>
+        <CursorPos X="69" Y="13"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="spacehackcontrolspotentiometer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolspotentiometer"/>
+        <EditorIndex Value="4"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="1" Y="7"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="spacehackcontrolscombosevensegcolourrotary.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolscombosevensegcolourrotary"/>
+        <EditorIndex Value="3"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="6" Y="23"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="spacehackcontrolsilluminatedbutton.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="spacehackcontrolilluminatedbutton"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="0"/>
+        <TopLine Value="1"/>
+        <CursorPos X="23" Y="1"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit21>
     </Units>
     <General>
       <ActiveWindowIndexAtStart Value="0"/>
     </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="411" Column="5" TopLine="396"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="297" Column="44" TopLine="285"/>
       </Position1>
       <Position2>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="812" Column="3" TopLine="806"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="354" Column="30" TopLine="336"/>
       </Position2>
       <Position3>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="480" Column="14" TopLine="455"/>
+        <Caret Line="8" Column="57" TopLine="1"/>
       </Position3>
       <Position4>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="78" Column="1" TopLine="39"/>
+        <Caret Line="214" Column="3" TopLine="205"/>
       </Position4>
       <Position5>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="341" Column="8" TopLine="276"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="44" Column="3" TopLine="16"/>
       </Position5>
       <Position6>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="313" Column="39" TopLine="291"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="176" Column="1" TopLine="155"/>
       </Position6>
       <Position7>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="365" Column="13" TopLine="332"/>
+        <Caret Line="214" Column="5" TopLine="214"/>
       </Position7>
       <Position8>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="317" Column="36" TopLine="296"/>
+        <Caret Line="10" Column="35" TopLine="1"/>
       </Position8>
       <Position9>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="321" Column="36" TopLine="299"/>
+        <Caret Line="116" Column="50" TopLine="95"/>
       </Position9>
       <Position10>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="373" Column="17" TopLine="352"/>
+        <Caret Line="12" Column="16" TopLine="1"/>
       </Position10>
       <Position11>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="387" Column="9" TopLine="324"/>
+        <Caret Line="11" Column="3" TopLine="1"/>
       </Position11>
       <Position12>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="336" Column="12" TopLine="312"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="63" Column="3" TopLine="37"/>
       </Position12>
       <Position13>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="62" Column="28" TopLine="38"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="120" Column="1" TopLine="99"/>
       </Position13>
       <Position14>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="539" Column="33" TopLine="518"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="204" Column="1" TopLine="173"/>
       </Position14>
       <Position15>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="408" Column="59" TopLine="375"/>
+        <Filename Value="spacehackcontrols.pas"/>
+        <Caret Line="262" Column="5" TopLine="243"/>
       </Position15>
       <Position16>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="404" Column="47" TopLine="382"/>
+        <Caret Line="10" Column="14" TopLine="1"/>
       </Position16>
       <Position17>
         <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="10" Column="21" TopLine="1"/>
+        <Caret Line="203" Column="1" TopLine="183"/>
       </Position17>
       <Position18>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="216" Column="21" TopLine="205"/>
+        <Caret Line="12" Column="93" TopLine="1"/>
       </Position18>
       <Position19>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="9" Column="22" TopLine="1"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="275" Column="54" TopLine="250"/>
       </Position19>
       <Position20>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="159" Column="17" TopLine="158"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="303" Column="30" TopLine="268"/>
       </Position20>
       <Position21>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="110" Column="26" TopLine="97"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="305" Column="34" TopLine="270"/>
       </Position21>
       <Position22>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="226" Column="30" TopLine="215"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="358" Column="30" TopLine="323"/>
       </Position22>
       <Position23>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="345" Column="40" TopLine="328"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="364" Column="31" TopLine="329"/>
       </Position23>
       <Position24>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="82" Column="15" TopLine="67"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="370" Column="34" TopLine="335"/>
       </Position24>
       <Position25>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="347" Column="29" TopLine="336"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="35" Column="15" TopLine="14"/>
       </Position25>
       <Position26>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="227" Column="43" TopLine="216"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="70" Column="16" TopLine="36"/>
       </Position26>
       <Position27>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="297" Column="44" TopLine="285"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="80" Column="25" TopLine="46"/>
       </Position27>
       <Position28>
-        <Filename Value="spacehackcontrols.pas"/>
-        <Caret Line="354" Column="30" TopLine="336"/>
+        <Filename Value="consolesimmain.pas"/>
+        <Caret Line="108" Column="26" TopLine="74"/>
       </Position28>
       <Position29>
         <Filename Value="consolesimmain.pas"/>
-        <Caret Line="8" Column="57" TopLine="1"/>
+        <Caret Line="226" Column="1" TopLine="217"/>
       </Position29>
       <Position30>
-        <Filename Value="consolesimmain.pas"/>
-        <Caret Line="214" Column="3" TopLine="205"/>
+        <Filename Value="spacehackcontrolsilluminatedbutton.pas"/>
+        <Caret Line="1" Column="1" TopLine="1"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
+  <EditorMacros Count="0"/>
 </CONFIG>

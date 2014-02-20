@@ -7,7 +7,17 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ExtCtrls, MaskEdit, ComCtrls, EditBtn, Buttons, MQTTComponent, fpjson,
-  JSONParser, spacehackcontrols;
+  JSONParser,
+
+  spacehackcontrols,
+  spacehackcontrolsinstructiondisplay,
+  spacehackcontrolsilluminatedtoggle,
+  spacehackcontrolskeypad,
+  spacehackcontrolsilluminatedbutton,
+  spacehackcontrolsfourbuttons,
+  spacehackcontrolspotentiometer,
+  spacehackcontrolscombosevensegcolourrotary
+  ;
 
 type
 
@@ -69,12 +79,6 @@ type
     procedure btnRegisterClick(Sender: TObject);
     procedure btnReloadClick(Sender: TObject);
     procedure cbUIUpdateChange(Sender: TObject);
-
-    procedure handleCtrlUp(Sender: TObject; Button: TMouseButton;
-                          Shift: TShiftState; X, Y: Integer);
-    procedure handleCtrlDown(Sender: TObject; Button: TMouseButton;
-                          Shift: TShiftState; X, Y: Integer);
-
     procedure fneLoadConfigAcceptFileName(Sender: TObject; var Value: String);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -213,31 +217,6 @@ begin
     MQTTClient.Unsubscribe(memAddSub.Lines[i]);
   end;
   memAddSub.Clear;
-end;
-
-
-procedure handleGameControl(action: TSpacehackControlAction; sender: TObject);
-var
-  controlID: integer;
-  stateID: integer;
-begin
-  controlID := TWinControl(sender).Parent.Tag;
-  stateID := TWinControl(Sender).Tag;
-  frmMain.log(inttostr(stateID) + ' Changed for control ' + inttostr((controlID)));
-  frmMain.log(myspacehackControls[controlID].ToString);
-  TSpacehackGameControl(myspacehackControls[controlID]).update(action, 'clients/' + myIP + '/' + inttostr(controlID) + '/valuechanged', stateID);
-end;
-
-procedure TfrmMain.handleCtrlDown(Sender: TObject; Button: TMouseButton;
-                          Shift: TShiftState; X, Y: Integer);
-begin
-  handleGameControl(shcaDown, sender);
-end;
-
-procedure TfrmMain.handleCtrlUp(Sender: TObject; Button: TMouseButton;
-                          Shift: TShiftState; X, Y: Integer);
-begin
-  handleGameControl(shcaUp, sender);
 end;
 
 procedure TfrmMain.btnCreateControlsClick(Sender: TObject);
